@@ -1,0 +1,10 @@
+﻿apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: weather-app
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
+  ApplicationSettings__Redis: "weather-app-redis-service.weather-app.svc.cluster.local"
+  ApplicationSettings__KeyPath: "/var/lib/data"
+
+

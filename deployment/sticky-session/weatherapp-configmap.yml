@@ -1,0 +1,9 @@
+﻿apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: weather-app
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
+  ApplicationSettings__KeyPath: "/var/lib/data"
+      
+ 

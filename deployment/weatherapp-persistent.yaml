@@ -1,0 +1,29 @@
+﻿apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: weather-app-volume
+  labels:
+    type: local
+spec:
+  storageClassName: hostpath
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+    
+    
+    
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: weather-app-claim
+spec:
+  storageClassName: hostpath
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi

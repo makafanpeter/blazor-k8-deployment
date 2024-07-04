@@ -1,0 +1,52 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: weather-app
+  name: weather-app
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: weather-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: weather-app
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+          envFrom:
+            - configMapRef:
+                name: weather-app
+          image: blazor-k8-deployment/weather-app:latest
+          name: weather-app
+          imagePullPolicy: Never
+          resources: {}
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - mountPath:  /var/lib/data
+              name: data
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: weather-app-claim
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-app-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: weather-app
+  ports:
+    - port: 8001
+      targetPort: 80
