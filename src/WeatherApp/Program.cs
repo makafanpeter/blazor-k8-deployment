@@ -31,6 +31,9 @@ if (keyPath == null)
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(keyPath));
 
+var openWeatherMapAPIKey = builder.Configuration["ApplicationSettings:OpenWeatherMapAPIKey"]?? string.Empty;
+
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: weather-app-redis
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: weather-app-redis
