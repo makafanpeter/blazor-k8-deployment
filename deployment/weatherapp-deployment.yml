@@ -19,6 +19,11 @@ spec:
         - env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
+            - name: ApplicationSettings__OpenWeatherMapAPIKey
+              valueFrom:
+                secretKeyRef:
+                  name: open-weather-map-api-key-secret
+                  key: open-weather-map-api-key
           envFrom:
             - configMapRef:
                 name: weather-app
