@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Serilog;
 using Serilog.Events;
 using WeatherApp.Data;
+using WeatherApp.Data.Client;
 
 var appName = "weather-app";
 
@@ -21,6 +22,7 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
 
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
 var keyPath = builder.Configuration["ApplicationSettings:KeyPath"]?? string.Empty;
 if (keyPath == null)
@@ -31,14 +33,24 @@ if (keyPath == null)
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(keyPath));
 
-var openWeatherMapAPIKey = builder.Configuration["ApplicationSettings:OpenWeatherMapAPIKey"]?? string.Empty;
-
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
+// Register Services
+var openWeatherMapApiKey = builder.Configuration["ApplicationSettings:OpenWeatherMapAPIKey"]?? string.Empty;
+builder.Services.AddTransient<ApiKeyDelegatingHandler>(provider => new ApiKeyDelegatingHandler(openWeatherMapApiKey));
+builder.Services.AddTransient<ApiKeyDelegatingHandler>();
+builder.Services.AddHttpClient<IOpenWeatherMapClient, OpenWeatherMapClient>()
+    .AddHttpMessageHandler<ApiKeyDelegatingHandler>()
+    .ConfigureHttpMessageHandlerBuilder(httpMessageHandlerBuilder =>
+    {
+        httpMessageHandlerBuilder.PrimaryHandler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (m, c, ch, e) => true
+        };
+    });
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -53,7 +65,6 @@ if (!string.IsNullOrEmpty(redisConnection))
     Log.Information("Setting up Redis");
     builder.Services.AddSignalR().AddStackExchangeRedis(redisConnection);
 }
-
 
 var app = builder.Build();
 
