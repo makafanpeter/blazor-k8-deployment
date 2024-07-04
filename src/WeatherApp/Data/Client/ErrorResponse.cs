@@ -5,7 +5,7 @@ public partial class ErrorResponse
 {
 
     [System.Text.Json.Serialization.JsonPropertyName("cod")]
-    public int Cod { get; set; }
+    public string Cod { get; set; }
 
     [System.Text.Json.Serialization.JsonPropertyName("message")]
     public string Message { get; set; }

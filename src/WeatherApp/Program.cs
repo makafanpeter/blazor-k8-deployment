@@ -41,7 +41,6 @@ builder.Services.AddSingleton<WeatherForecastService>();
 // Register Services
 var openWeatherMapApiKey = builder.Configuration["ApplicationSettings:OpenWeatherMapAPIKey"]?? string.Empty;
 builder.Services.AddTransient<ApiKeyDelegatingHandler>(provider => new ApiKeyDelegatingHandler(openWeatherMapApiKey));
-builder.Services.AddTransient<ApiKeyDelegatingHandler>();
 builder.Services.AddHttpClient<IOpenWeatherMapClient, OpenWeatherMapClient>()
     .AddHttpMessageHandler<ApiKeyDelegatingHandler>()
     .ConfigureHttpMessageHandlerBuilder(httpMessageHandlerBuilder =>

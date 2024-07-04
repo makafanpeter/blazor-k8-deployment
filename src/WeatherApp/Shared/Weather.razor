@@ -1,0 +1,48 @@
+﻿<div class="container">
+<div class="autocomplete w-25">
+    
+    <input @bind=_selectedCityName @oninput=HandleInput class="form-control filter"/>
+    @if (_geoResponses is not null)
+    {
+        <ul class="options">
+            @if (_geoResponses.Any())
+            {
+                @foreach (var city in _geoResponses)
+                {
+                    <li class="option" @onclick=@(_ => SelectCity(city.Name))>
+                        <span class="option-text">@city.Name, @city.Country</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="disabled option">No results</li>
+            }
+        </ul>
+    }
+</div>
+</div>
+<div>
+
+    @if (_error)
+    {
+    <div class="col-md-7 col-lg-8">
+        <div class="alert alert-danger" role="alert">
+            @ErrorMessage
+        </div>
+    </div>
+    }
+    @if (_loading)
+    {
+        <div class="col-md-7 col-lg-8">
+            <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+    }
+    else if (_selectedLocation is not null)
+    {
+        <WeatherDetail SelectedLocation="@_selectedLocation"/>
+    }
+</div>
