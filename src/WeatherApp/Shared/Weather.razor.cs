@@ -71,10 +71,10 @@ public partial class Weather: ComponentBase
         }
     }
  
-    void SelectCity(string name)
+    void SelectCity(GeoResponse city)
     {
-        _selectedCityName = name;
-        _selectedLocation = _geoResponses!.First(c => c.Name.Equals(_selectedCityName));
+        _selectedCityName = city.Name;
+        _selectedLocation = _geoResponses!.First(c => c.Name.Equals(city.Name) && c.Country.Equals(city.Country));
         _geoResponses = null;
     }
 }

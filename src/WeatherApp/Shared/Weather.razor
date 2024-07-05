@@ -11,7 +11,7 @@
                         {
                             @foreach (var city in _geoResponses)
                             {
-                                <li class="option" @onclick=@(_ => SelectCity(city.Name))>
+                                <li class="option" @onclick=@(_ => SelectCity(city))>
                                     <span class="option-text">@city.Name, @city.Country</span>
                                 </li>
                             }
