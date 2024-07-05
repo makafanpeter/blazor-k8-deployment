@@ -6,42 +6,31 @@
         </div>
     </div>
 }
-@if (_weather == null)
+@if (_weather != null)
 {
-    <div class="col-md-7 col-lg-8">
-        <div class="spinner-border" role="status">
-            <span class="sr-only"></span>
+    <header class="row justify-content-center py-3">
+        <div class="col-auto">
+            <h1>@SelectedLocation?.Name, @SelectedLocation?.Country Weather</h1>
+            <p>Geo coords [@SelectedLocation?.Lat, @SelectedLocation?.Lon]</p>
         </div>
-    </div>
-}
-else
-{
-    <div class="container">
-        <header class="row justify-content-center py-3">
-            <div class="col-auto">
-                <h1>@SelectedLocation?.Name, @SelectedLocation?.Country Weather</h1>
-                <p>Geo coords [@SelectedLocation?.Lat, @SelectedLocation?.Lon]</p>
-            </div>
-        </header>
+    </header>
 
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-12 text-center">
-                @{
-                    WeatherApp.Data.Client.Weather? weather = null;
-                }
-                @if (_weather.Weather.Any())
-                {
-                    weather = _weather.Weather.First();
-                    var icon = $" https://openweathermap.org/img/wn/{weather.Icon}@2x.png";
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-12 text-center">
+            @{
+                WeatherApp.Data.Client.Weather? weather = null;
+            }
+            @if (_weather.Weather.Any())
+            {
+                weather = _weather.Weather.First();
+                var icon = $" https://openweathermap.org/img/wn/{weather.Icon}@2x.png";
 
-                    <img src="@icon" alt="@weather.Description"/>
-                }
-                <p class="fs-1">@_weather.Main.Temp°F</p>
-                <p>Feels like @_weather.Main.Feels_like°F. @weather?.Description.</p>
-                <p><strong>Wind Speed:</strong> @_weather.Wind.Speed - m/s</p>
-                <p><strong>Humidity:</strong> @_weather.Main.Humidity - %</p>
-            </div>
+                <img src="@icon" alt="@weather.Description" class="img-fluid"/>
+            }
+            <p class="fs-1">@_weather.Main.Temp°F</p>
+            <p>Feels like @_weather.Main.Feels_like°F. @weather?.Description.</p>
+            <p><strong>Wind Speed:</strong> @_weather.Wind.Speed - m/s</p>
+            <p><strong>Humidity:</strong> @_weather.Main.Humidity - %</p>
         </div>
-
     </div>
 }
