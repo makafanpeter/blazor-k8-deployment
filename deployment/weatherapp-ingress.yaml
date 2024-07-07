@@ -4,10 +4,12 @@ metadata:
   name: weather-app-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "weather-app"
 spec:
   ingressClassName: nginx
   rules:
-    - host: redis.weather-app.local
+    - host: weather-app.local
       http:
         paths:
           - path: /

@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: weather-app
 data:
-  ASPNETCORE_ENVIRONMENT: "Development"
-  ApplicationSettings__Redis: "weather-app-redis-service.weather-app.svc.cluster.local"
+  ASPNETCORE_ENVIRONMENT: "Staging"
+  ApplicationSettings__Redis: "weather-app-redis-service.weather-app.svc.cluster.local:8002"
   ApplicationSettings__KeyPath: "/var/lib/data"
 
 

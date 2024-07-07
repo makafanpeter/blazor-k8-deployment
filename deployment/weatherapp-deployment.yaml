@@ -17,8 +17,6 @@ spec:
     spec:
       containers:
         - env:
-            - name: ASPNETCORE_ENVIRONMENT
-              value: Development
             - name: ApplicationSettings__OpenWeatherMapAPIKey
               valueFrom:
                 secretKeyRef:
