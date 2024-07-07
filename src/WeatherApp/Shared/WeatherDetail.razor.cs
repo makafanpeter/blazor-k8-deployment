@@ -36,7 +36,8 @@ public partial class WeatherDetail : ComponentBase
             
             try
             {
-                    
+                _error = false;
+                ErrorMessage = string.Empty;   
                 if (OpenWeatherMapClient != null) 
                     _weather = await OpenWeatherMapClient.WeatherAsync(query);
             }

@@ -41,6 +41,8 @@ public partial class Weather: ComponentBase
             {
                 return;
             }
+            _error = false;
+            _loading = true;
             try
             {
                     
