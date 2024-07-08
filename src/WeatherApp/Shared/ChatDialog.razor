@@ -1,0 +1,50 @@
+﻿<div class="chat-wrapper">
+    <div class="container">
+        <button class="collapsible">Weather Chatbot</button>
+        <div class="content">
+            <div class="chat-container">
+                <div class="chat-bubble">
+                    <input type="hidden" id="@Username" value="@Username"/>
+                    <p class="chat-response">Welcome to the Weather Chatbot!</p>
+                    <p class="chat-response">Ask me about the weather by entering a location e.g. Birmingham,UK</p>
+                </div>
+                <input type="text" @bind="MessageInput" class="form-control" disabled="@(!IsConnected)" placeholder="Enter a location..." @onkeydown="HandleKeyDown">
+                <div id="chat-log">
+                    <div class="message">
+                        @if (_message.WeatherResponse is not null)
+                        {
+                        <WeatherDetailTemplate Weather="@_message.WeatherResponse"/>
+                        }
+                        else
+                        {
+
+                            if (!string.IsNullOrEmpty(_message.Text))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @_message.Text
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>

@@ -2,8 +2,8 @@
     <div class="row g-3">
         <div class="col-12">
             <div class="input-group autocomplete">
-                <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                <InputText @bind-Value="_selectedCityName" class="form-control filter" @oninput="HandleInput"/>
+                <span class="input-group-text"><i class="oi oi-location"></i></span>
+                <InputText @bind-Value="_selectedCityName" class="form-control filter" placeholder="Start typing a location..." @oninput="HandleInput"/>
                 @if (_geoResponses is not null)
                 {
                     <ul class="options">

@@ -1,0 +1,78 @@
+﻿.chat-wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(248, 249, 250, 0.9);
+}
+
+.chat-container {
+    background-color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.chat-bubble {
+    background-color: rgb(5, 39, 103);
+    color: white;
+    padding: 15px;
+}
+
+.chat-response {
+    margin-bottom: 5px;
+}
+
+.form-control {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    border-radius: 0;
+}
+
+#chat-log {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+
+.collapsible {
+    background-color: rgb(5, 39, 103);
+    color: white;
+    cursor: pointer;
+    padding: 10px 15px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    border-radius: 10px 10px 0 0;
+}
+
+.active, .collapsible:hover {
+    background-color: rgb(5, 39, 103)
+}
+
+.content {
+    display: none;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}

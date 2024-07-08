@@ -1,5 +1,11 @@
 ﻿@page "/"
+@using WeatherApp.Infrastructure.Services.Identity
+@inject IdentityService IdentityService
 
 <PageTitle>Weather</PageTitle>
 
 <Weather />
+
+
+<ChatDialog Username="@IdentityService.Id" />
+

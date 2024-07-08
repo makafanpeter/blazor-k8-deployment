@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.ResponseCompression;
 using Serilog;
 using Serilog.Events;
 using WeatherApp.Data;
 using WeatherApp.Data.Client;
+using WeatherApp.Infrastructure.Services.Hubs;
+using WeatherApp.Infrastructure.Services.Identity;
 
 var appName = "weather-app";
 
@@ -36,7 +39,7 @@ builder.Services.AddDataProtection()
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<IdentityService>();
 
 // Register Services
 var openWeatherMapApiKey = builder.Configuration["ApplicationSettings:OpenWeatherMapAPIKey"] ?? string.Empty;
@@ -57,7 +60,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 });
 
-var redisConnection = builder.Configuration["ApplicationSettings:Redis"] ?? string.Empty;
+var redisConnection =  builder.Configuration["ApplicationSettings:Redis"] ?? string.Empty;
 
 if (!string.IsNullOrEmpty(redisConnection))
 {
@@ -67,7 +70,16 @@ if (!string.IsNullOrEmpty(redisConnection))
     );
 }
 
+
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new []{"application/octet-stream"});
+});
+
 var app = builder.Build();
+
+app.UseResponseCompression();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -86,4 +98,5 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
+app.MapHub<WeatherHub>("/weatherHub");
 app.Run();

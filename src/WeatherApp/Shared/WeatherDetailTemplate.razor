@@ -1,0 +1,25 @@
+﻿<header class="row justify-content-center py-3">
+    <div class="col-auto">
+        <h1>@Weather.Name, @Weather.Sys.Country Weather</h1>
+        <p>Geo coords [@Weather.Coord.Lat, @Weather.Coord.Lon]</p>
+    </div>
+</header>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12 text-center">
+        @{
+            WeatherApp.Data.Client.Weather? weather = null;
+        }
+        @if (Weather.Weather.Any())
+        {
+            weather = Weather.Weather.First();
+            var icon = $" https://openweathermap.org/img/wn/{weather.Icon}@2x.png";
+
+            <img src="@icon" alt="@weather.Description" class="img-fluid"/>
+        }
+        <p class="fs-1">@Weather.Main.Temp°F</p>
+        <p>Feels like @Weather.Main.Feels_like°F. @weather?.Description.</p>
+        <p><strong>Wind Speed:</strong> @Weather.Wind.Speed - m/s</p>
+        <p><strong>Humidity:</strong> @Weather.Main.Humidity - %</p>
+    </div>
+</div>
